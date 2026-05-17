@@ -5,9 +5,9 @@ A high-performance, asynchronous, multi-threaded In-Memory Key-Value database wr
 ## 🛠️ Project Roadmap
 - [x] Asynchronous TCP network engine powered by `Tokio`.
 - [x] Thread-safe In-Memory storage architecture (`Arc<Mutex<HashMap>>`).
-- [ ] Redis-compatible RESP protocol parser.
-- [ ] Write-Ahead Logging (WAL) engine for disk persistence.
-- [ ] Memory optimization using B-Trees instead of standard HashMap.
+- [x] Redis-compatible RESP protocol parser.
+- [x] Write-Ahead Logging (WAL) engine for disk persistence.
+- [x] Memory optimization using B-Trees instead of standard HashMap.
 
 ## 🚀 Getting Started
 
