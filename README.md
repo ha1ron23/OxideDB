@@ -50,7 +50,10 @@ OK
 127.0.0.1:6379> GET user
 "ha1ron23"
 ```
-
+#### Also you can DEL:
+```bash
+127.0.0.1:6379> DEL user
+```
 ### Method 2: Raw TCP Stream via `nc`
 For debugging network pipes, stream raw RESP frames into the open socket:
 ```bash
