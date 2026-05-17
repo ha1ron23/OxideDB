@@ -3,37 +3,37 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum OxideError {
     #[error("Protocol error: expected '{expected}', found '{found}'")]
-    ProtocolError { expected: char, found: char},
-
-    #[error("Protocol error: invalid array length format")]
+    ProtocolError { expected: char, found: char },
+    #[error("Incomplete RESP request")]
+    IncompleteRequest,
+    #[error("Invalid integer in RESP")]
+    InvalidInteger,
+    #[error("Invalid bulk string")]
+    InvalidBulkString,
+    #[error("Invalid array length")]
     InvalidArrayLength,
-
-    #[error("Protocol desynchronization: arguments count mismatch")]
-    ProtocolDesync,
-
-    #[error("Command error: wrong number of arguments for '{cmd}' command")]
+    #[error("Wrong number of arguments for '{cmd}'")]
     WrongArgsCount { cmd: String },
-
-    #[error("Command error: unknown command '{cmd}'")]
+    #[error("Unknown command '{cmd}'")]
     UnknownCommand { cmd: String },
-
-    #[error("Internal error: data storage lock is poisoned")]
-    PoisonedLock,
-
-    #[error("Storage error: failed to write to WAL log")]
+    #[error("WAL write error: {0}")]
     WalWriteError(#[from] std::io::Error),
+    #[error("Empty command")]
+    EmptyCommand,
 }
 
 impl OxideError {
     pub fn to_resp(&self) -> String {
-                match self {
-            OxideError::ProtocolError { .. } => "-ERR unknown protocol or formatting\r\n".to_string(),
+        match self {
+            OxideError::ProtocolError { .. } => "-ERR protocol error\r\n".to_string(),
+            OxideError::IncompleteRequest => "-ERR incomplete request\r\n".to_string(),
+            OxideError::InvalidInteger => "-ERR invalid integer\r\n".to_string(),
+            OxideError::InvalidBulkString => "-ERR invalid bulk string\r\n".to_string(),
             OxideError::InvalidArrayLength => "-ERR invalid array length\r\n".to_string(),
-            OxideError::ProtocolDesync => "-ERR protocol desynchronization\r\n".to_string(),
-            OxideError::WrongArgsCount { cmd } => format!("-ERR wrong number of arguments for '{}' command\r\n", cmd.to_lowercase()),
+            OxideError::WrongArgsCount { cmd } => format!("-ERR wrong number of arguments for '{}'\r\n", cmd),
             OxideError::UnknownCommand { cmd } => format!("-ERR unknown command '{}'\r\n", cmd),
-            OxideError::PoisonedLock => "-ERR internal server error (poisoned lock)\r\n".to_string(),
-            OxideError::WalWriteError(e) => format!("-ERR WAL write failed: {}\r\n", e),
+            OxideError::WalWriteError(e) => format!("-ERR WAL error: {}\r\n", e),
+            OxideError::EmptyCommand => "-ERR empty command\r\n".to_string(),
         }
     }
 }
