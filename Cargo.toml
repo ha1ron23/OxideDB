@@ -1,11 +1,13 @@
 [package]
-name = "oxidedb"
-version = "1.0.0"
-description = "A production-ready asynchronous B-Tree key-value store with RESP and WAL"
+name = "rust-oxide-database"
+version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1.38", features = ["full"] }
-thiserror = "1.0"
+tokio = { version = "1", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = "0.3"
+thiserror = "1"
+
+[dev-dependencies]
+tempfile = "3"
