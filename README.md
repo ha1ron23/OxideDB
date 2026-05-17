@@ -14,7 +14,7 @@ A high-performance, asynchronous, multi-threaded In-Memory Key-Value database wr
 ### Prerequisites
 Make sure you have the Rust toolchain installed. If not, install it using:
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 ### Installation & Build
