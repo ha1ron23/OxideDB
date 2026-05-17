@@ -20,7 +20,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh
 ### Installation & Build
 Clone this repository to your local machine and navigate into the project directory:
 ```bash
-git clone https://github.com
+git clone https://github.com/ha1ron23/OxideDB.git
 cd OxideDB
 ```
 
